@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './pages/Layout';
 import NotFoundPage from './pages/NotFoundPage';
 import Player from './pages/Player';
+import Favourites from './pages/Favourites';
 
 function App() {
 
@@ -20,10 +21,12 @@ function App() {
 
               <Route path='/player' element={<Player />}></Route>
 
+              <Route path='/favs' element={<Favourites />} ></Route>
+
               <Route path="*" element={<NotFoundPage />}></Route>
 
             </Route>
-            
+
         </Routes>
       </BrowserRouter>
     </>
