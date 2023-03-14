@@ -5,6 +5,7 @@ import Layout from './pages/Layout';
 import NotFoundPage from './pages/NotFoundPage';
 import Player from './pages/Player';
 import Favourites from './pages/Favourites';
+import '@fontsource/roboto/300.css';
 
 function App() {
 
@@ -13,22 +14,24 @@ function App() {
     <>
 
       <BrowserRouter>
-        <Routes>
+          <Routes>
 
-            <Route path='/' element={<Layout />}>
+              <Route path='/' element={<Layout />}>
 
-              <Route index element={<Home/> }></Route>
+                          <Route index element={<Home/> }></Route>
 
-              <Route path='/player' element={<Player />}></Route>
+                          <Route path='/player' element={<Player />}></Route>
 
-              <Route path='/favs' element={<Favourites />} ></Route>
+                          <Route path='/favs' element={<Favourites />} ></Route>
 
-              <Route path="*" element={<NotFoundPage />}></Route>
+                          <Route path="*" element={<NotFoundPage />}></Route>
 
-            </Route>
+              </Route>
 
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+
+      
     </>
   )
 }
