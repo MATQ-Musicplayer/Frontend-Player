@@ -1,5 +1,4 @@
 import Button from '@mui/material/Button';
-import BearCounter from '../components/bearCounter';
 import Box from '@mui/material/Box';
 import TrackList from '../components/TrackList';
 import { Container } from '@mui/material';

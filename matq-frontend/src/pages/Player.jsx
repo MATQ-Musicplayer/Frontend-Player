@@ -1,4 +1,4 @@
-import BearCounter from "../components/bearCounter";
+
 import PlayerControls from "../components/PlayerControls";
 import PlayerImage from "../components/PlayerImage";
 

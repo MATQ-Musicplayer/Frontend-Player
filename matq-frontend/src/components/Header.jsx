@@ -1,47 +1,46 @@
+import * as React from 'react';
 import { Search } from "@mui/icons-material";
-import { AppBar, Autocomplete, FormControl, TextField, Toolbar, Typography} from "@mui/material";
+import { AppBar, TextField, Toolbar, Typography} from "@mui/material";
+import { Box } from "@mui/system";
+import VolumeControls from './VolumeControls';
 
 
 
 function Header() {
-    
-    const tracks = [
-        {
-            title: "Weekend - Starboy"
-        },
-        {
-            title: "Scriptonite - Довод"
-        }
-    ]
 
     return (
         <AppBar 
         position="static"
         >
-                <Toolbar>
+                <Toolbar
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between"
+                }}
+                >
                     <Typography
                         variant="h6"
                         component={"span"}
-                        sx={{
-                            flexGrow: 1
-                        }}
                     >
                         MATQ Music
                     </Typography>
+                        
 
-                    <Search
-                    color="inherit"
+                    <VolumeControls />
+
+                    <Box
+                    sx={{
+                        display: "flex"
+                    }}
                     >
-                    </Search>
-                    <TextField
-                    type={"search"}
-                    label="Search"
-                    variant="standard"
-                    >
+                        <TextField
+                            type={"search"}
+                            label="Search"
+                            variant="standard"
+                        >
 
-                    </TextField>
-                    
-
+                        </TextField>
+                    </Box>
 
                 </Toolbar>
         </AppBar>
