@@ -31,7 +31,7 @@ function Layout() {
                 minHeight: '100',
             }}
         >
-            <Header></Header>
+            <Header/>
 
 
             <Outlet  />

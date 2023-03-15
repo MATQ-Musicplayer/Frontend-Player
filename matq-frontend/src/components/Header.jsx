@@ -1,5 +1,5 @@
 import { Search } from "@mui/icons-material";
-import { AppBar, Autocomplete, FormControl, Toolbar, Typography} from "@mui/material";
+import { AppBar, Autocomplete, FormControl, TextField, Toolbar, Typography} from "@mui/material";
 
 
 
@@ -33,6 +33,14 @@ function Header() {
                     color="inherit"
                     >
                     </Search>
+                    <TextField
+                    type={"search"}
+                    label="Search"
+                    variant="standard"
+                    >
+
+                    </TextField>
+                    
 
 
                 </Toolbar>
