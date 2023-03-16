@@ -34,7 +34,7 @@ function TrackList(props) {
     useEffect(() => {
         fetchTracks()
         console.log(tracks);
-    },[])
+    },[]);
 
     let renderTracks = tracks.map(track => {
         return <TrackItem key={track._id} title={track.title} artist={track.artist} image={track.image} src={track.src} year={track.year} />

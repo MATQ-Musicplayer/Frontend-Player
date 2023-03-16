@@ -12,7 +12,7 @@ import HeadphonesIcon from '@mui/icons-material/Headphones';
 /* ------------------------ */
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import Home from "./Home";
-import Player from "./Player";
+import Player from "../components/Player";
 import Header from "../components/Header";
 
 let theme = createTheme();
@@ -55,7 +55,7 @@ function Layout() {
                         }}
                     >
                         <BottomNavigationAction href="/"  label="Home" icon={<HomeIcon fontSize="large"/>} />
-                        <BottomNavigationAction  href="/player" label="Music" icon={<HeadphonesIcon fontSize="large"/>} />
+                        <BottomNavigationAction  href="/music" label="Music" icon={<HeadphonesIcon fontSize="large"/>} />
                         <BottomNavigationAction href="/favs" label="Favorites" icon={<FavoriteIcon fontSize="large"/>} />
                         
                     </BottomNavigation>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import useTrackStore from "../hooks/TrackStore";
 import useSound from "use-sound";
 import stan from '../music/eminem-stan-long-version-ft-dido.mp3';
-import outOfStyle from '../music/limp-bizkit-out-of-style-official-music-video.mp3'
+import outOfStyle from '../music/limp-bizkit-out-of-style-official-music-video.mp3';
 
 
 function TrackItem({title, artist,  image, src, year}) {
@@ -12,7 +12,7 @@ function TrackItem({title, artist,  image, src, year}) {
     // useState
     const [playing, setPlaying] = useState(false);
     // useSound 
-    const [play, {stop}] = useSound(outOfStyle, {
+    const [play, {stop}] = useSound(src, {
         volume: vol
     });
 
