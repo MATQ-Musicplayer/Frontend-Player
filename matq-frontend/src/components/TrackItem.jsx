@@ -2,8 +2,7 @@ import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } f
 import { useState } from "react";
 import useTrackStore from "../hooks/TrackStore";
 import useSound from "use-sound";
-import stan from '../music/eminem-stan-long-version-ft-dido.mp3';
-import outOfStyle from '../music/limp-bizkit-out-of-style-official-music-video.mp3';
+
 
 
 function TrackItem({title, artist,  image, src, year}) {
@@ -12,7 +11,7 @@ function TrackItem({title, artist,  image, src, year}) {
     // useState
     const [playing, setPlaying] = useState(false);
     // useSound 
-    const [play, {stop}] = useSound(src, {
+    const [play, {stop, pause}] = useSound(src, {
         volume: vol
     });
 
@@ -20,7 +19,7 @@ function TrackItem({title, artist,  image, src, year}) {
 
     function playPauseHandler() {
         setPlaying(!playing);
-        !playing ? play() : stop();
+        !playing ? play() : pause();
     }
 
     return (
@@ -66,7 +65,7 @@ function TrackItem({title, artist,  image, src, year}) {
                     onClick={playPauseHandler}
 
                     >
-                        {playing ? "Stop" : "Play"}
+                        {playing ? "Pause" : "Play"}
                     </Button>
                 </CardActions>
 
