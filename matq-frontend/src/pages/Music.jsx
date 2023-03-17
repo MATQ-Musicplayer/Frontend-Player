@@ -8,15 +8,16 @@ import useTrackStore from "../hooks/TrackStore";
 
 
 function Music() {
-    
     const fetchTracks = useTrackStore(state => state.fetchAllTracks);
     const tracks = useTrackStore(state => state.tracks);
 
+
     useEffect(() => {
         fetchTracks();
-    })
+        console.log(tracks);
+    }, []);
 
-    return (
+    return ( 
         <Container
         sx={{
             height: '90vh',

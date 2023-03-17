@@ -18,11 +18,7 @@ function TrackItem({title, artist,  image, src, year, trackId}) {
     const setCurrentTrack = useTrackStore(state => state.setCurrentTrack);
     
 
-    
-    // useState
-    // const [playing, setPlaying] = useState(false);
-    // useSound 
-    const [play, {stop, pause}] = useSound(src, {
+    const [play, {pause, stop}] = useSound(src, {
         volume: vol,
         onend: () => {
             console.log('song ended');
@@ -30,43 +26,27 @@ function TrackItem({title, artist,  image, src, year, trackId}) {
         }
     });
 // ----------------------------------------------------
-    // useEffect(() => {
-    //     if ((currentTrack !== trackId)  ) {
-            
-    //     }
-    // }, [currentTrack]);
+
 
 
     function playPauseHandler(evt) {
         setCurrentTrack(trackId);
 
         setPlayer({
-            play, stop, pause
+            play, pause, stop
         });
 
-        console.log(evt.target.textContent);
-
-        if (evt.target.textContent === 'Stop') {
+        if (evt.target.textContent === 'Stop' && isPlaying) {
             console.log('Stop gedruckt!!!');
-            pause()
+            pausePlay()
             setIsPlaying(false);
         } else {
             console.log('PLAAAAYY');
-            // stopPlay();
             startPlay();
             setIsPlaying(true);
         }
 
         console.log(isPlaying);
-        // setIsPlaying(false);
-
-        // if (!isPlaying) {
-        //     startPlay();
-        //     setIsPlaying(true);
-        // } else {
-        //     pausePlay();
-        //     setIsPlaying(false);
-        // }
 
     }
 

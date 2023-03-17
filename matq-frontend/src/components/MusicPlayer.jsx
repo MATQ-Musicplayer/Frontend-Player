@@ -19,37 +19,7 @@ import useSound from "use-sound";
 const defaultImage =
   "https://images.macrumors.com/t/hi1_a2IdFGRGMsJ0x31SdD_IcRk=/1600x/article-new/2018/05/apple-music-note.jpg";
 
-const WallPaper = styled("div")({
-  position: "absolute",
-  width: "100%",
-  height: "100%",
-  top: 0,
-  left: 0,
-  overflow: "hidden",
-  background: "linear-gradient(rgb(255, 38, 142) 0%, rgb(255, 105, 79) 100%)",
-  transition: "all 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s",
-  "&:before": {
-    content: '""',
-    width: "140%",
-    height: "140%",
-    position: "absolute",
-    top: "-40%",
-    right: "-50%",
-    background:
-      "radial-gradient(at center center, rgb(62, 79, 249) 0%, rgba(62, 79, 249, 0) 64%)",
-  },
-  "&:after": {
-    content: '""',
-    width: "140%",
-    height: "140%",
-    position: "absolute",
-    bottom: "-50%",
-    left: "-30%",
-    background:
-      "radial-gradient(at center center, rgb(247, 237, 225) 0%, rgba(247, 237, 225, 0) 70%)",
-    transform: "rotate(30deg)",
-  },
-});
+
 
 const Widget = styled("div")(({ theme }) => ({
   padding: 16,
@@ -85,61 +55,114 @@ const TinyText = styled(Typography)({
 });
 
 export default function MusicPlayerSlider({tracks}) {
-    // ZUSTAND
-    // const fetchTracks = useTrackStore(state => state.fetchAllTracks);
-    // const tracks = useTrackStore(state => state.tracks);
-
     const vol = useTrackStore(state => state.volume);
     const setPlayer = useTrackStore(state => state.setPlayer);
+
     const isPlaying = useTrackStore(state => state.isPlaying);
     const setIsPlaying = useTrackStore(state => state.setIsPlaying);
+
     const startPlay = useTrackStore(state => state.startPlay);
     const pausePlay = useTrackStore(state => state.pausePlay);
     const stopPlay = useTrackStore(state => state.stopPlay);
+
     const currentTrack = useTrackStore(state => state.currentTrack);
     const setCurrentTrack = useTrackStore(state => state.setCurrentTrack);
+
     const addToQueue = useTrackStore(state => state.addToQueue);
     const queue = useTrackStore(state => state.queue);
 
     const theme = useTheme();
-    const duration = 200; // seconds
+    const [duration, setDuration] = useState(200); // seconds
     const [position, setPosition] = useState(32);
     const [paused, setPaused] = useState(false);
 
-    // console.log(tracks);
+    const trackIndex = useTrackStore(state => state.trackIndex);
+    const increaseTrackIndex = useTrackStore(state => state.increaseTrackIndex);
+    const decreaseTrackIndex = useTrackStore(state => state.decreaseTrackIndex);
+    const setTrackIndex = useTrackStore(state => state.setTrackIndex);
+    
+    const [track, setTrack] = useState({});
 
+    const [play, {pause, stop}] = useSound(track.src, {
+        volume: vol,
+        onend: () => {
+            console.log('song ended');
+            setIsPlaying(false);
+        }
+    });
 
     useEffect(() => {
-
         tracks.forEach(track => {
             addToQueue(track._id);
         });
-        console.log(queue); 
-        setCurrentTrack(queue[0]);
-    }, []); 
+        console.log(queue);
+        setCurrentTrack(queue[trackIndex]);
+ 
+    }, [tracks]); 
 
-    // const [play, {stop, pause, sound}] = useSound(queue[0].src, {
-    //     volume: vol,
+    useEffect(() => {
+        if (currentTrack) {
+            setTrack(currentTrack);   
+        }
+    }, [currentTrack]);
 
-    //     onend: () => {
-    //         console.log('song ended');
-    //         setIsPlaying(false);
-    //     }
-    // });
+   
+  
+    function handlePlay() {
+        console.log(track);
 
-    // const [play, {stop, pause}] = useSound(tracks[1].src, {
-    //     volume: vol,
-    //     onend: () => {
-    //         console.log('song ended');
-    //         setIsPlaying(false);
-    //     }
-    // });
+        if (!isPlaying) {
+            play();
+            setIsPlaying(true);
+            console.log('PLAY!!!!!!!!!!!')
 
-    function handlePausePlay() {
-
-        play()
+        } else {
+            pause();
+            setIsPlaying(false);
+            console.log('PAUSE');
+        }
     }
 
+    function nextTrackHandler() {
+        console.log('Next track');
+        stop()
+
+        if (trackIndex === 0) {
+            setTrack(queue[1])
+        }
+   
+
+            queue.length > trackIndex ? increaseTrackIndex() : setTrackIndex(0)
+  
+  
+        console.log(trackIndex);
+        // setCurrentTrack(queue[trackIndex]);
+        setIsPlaying(false);
+        setPlayer({
+            play, pause, stop
+        });
+        
+        setTrack(queue[trackIndex]);
+    }
+   
+    function prevTrackHandler() {
+        stop()
+
+        setPlayer({
+            play, pause, stop
+        });
+        setIsPlaying(false);
+        console.log('Prev track');
+        
+
+
+        
+        trackIndex > 1 ? decreaseTrackIndex() : setTrackIndex(queue.length)
+        console.log(trackIndex);
+        // setCurrentTrack(queue[trackIndex]); 
+        setTrack(queue[trackIndex]);
+    } 
+ 
 
     function formatDuration(value) {
         const minute = Math.floor(value / 60);
@@ -156,7 +179,7 @@ export default function MusicPlayerSlider({tracks}) {
         <Widget>
             <Box sx={{ display: "flex", alignItems: "center" }}>
             <CoverImage>
-                <img alt="Song pic" src={defaultImage} />
+                <img alt={track.title} src={track.image} />
             </CoverImage>
 
             <Box sx={{ ml: 1.5, minWidth: 0 }}>
@@ -165,13 +188,13 @@ export default function MusicPlayerSlider({tracks}) {
                 color="text.secondary"
                 fontWeight={500}
                 >
-                Album / Year
+                {track.year}
                 </Typography>
                 <Typography noWrap>
-                <b>Track</b>
+                <b>{track.title}</b>
                 </Typography>
                 <Typography noWrap letterSpacing={-0.25}>
-                Band
+                {track.artist}
                 </Typography>
             </Box>
             </Box>
@@ -228,21 +251,27 @@ export default function MusicPlayerSlider({tracks}) {
                 mt: -1,
             }}
             >
-            <IconButton aria-label="previous song">
+            <IconButton 
+            aria-label="previous song"
+            onClick={prevTrackHandler}
+            >
                 <FastRewindRounded fontSize="large" htmlColor={mainIconColor} />
             </IconButton>
             <IconButton
-                aria-label={!paused ? "play" : "pause"}
+                aria-label={!isPlaying ? "play" : "pause"}
                 onClick={() => {
-                    setPaused(!paused);
-                    if (!paused) {
-                        console.log('play!!!!!!!!!!!')
-                    } else {
-                        console.log('PAUSE');
-                    }
-                }}
-            >
-                {!paused ? (
+                    handlePlay()
+                    // setPaused(!isPlaying);
+                    // if (!paused) {
+                    //     // play()
+                    //     console.log('PLAY!!!!!!!!!!!')
+                    // } else {
+                    //     // pause()
+                    //     console.log('PAUSE');
+                    // }
+                }} 
+            > 
+                {!isPlaying ? (
                 <PlayArrowRounded
                     sx={{ fontSize: "3rem" }}
 
@@ -254,7 +283,10 @@ export default function MusicPlayerSlider({tracks}) {
                 />
                 )}
             </IconButton>
-            <IconButton aria-label="next song">
+            <IconButton 
+            aria-label="next song"
+            onClick={nextTrackHandler}
+            >
                 <FastForwardRounded fontSize="large" htmlColor={mainIconColor} />
             </IconButton>
             </Box>

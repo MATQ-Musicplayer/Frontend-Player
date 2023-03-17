@@ -7,7 +7,7 @@ const API_URL_TRACKS = 'http://localhost:8080/tracks';
 
 const useTrackStore = create((set, get) => ({
     tracks: [],
-    currentTrack: 0,
+    currentTrack: null,
     setCurrentTrack: (trackId) => set(state => ({currentTrack: trackId})),
     isPlaying: false,
     isLoading: false,
@@ -40,7 +40,6 @@ const useTrackStore = create((set, get) => ({
     },
     stopPlay: () => {
         get().player?.stop();
-        
     },
     queue: [],
     addToQueue: (trackId) => {
@@ -48,8 +47,18 @@ const useTrackStore = create((set, get) => ({
         const track = get().tracks.find(track => track._id === trackId);
         queue.push(track);
         set({queue: queue});
-    }
+    },
+    duration: 200,
+    setDuration: (dur) => set({duration: dur}), 
+    trackIndex: 0,
+    increaseTrackIndex: () => {
+        set(state => ({trackIndex: state.trackIndex + 1}))
+    },
+    decreaseTrackIndex: () => {
+        set(state => ({trackIndex: state.trackIndex - 1}))
+    },
+    setTrackIndex: (value) => set(({trackIndex: value}))
 }));
-
+ 
 
 export default useTrackStore;
