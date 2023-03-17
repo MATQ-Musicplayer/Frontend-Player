@@ -7,10 +7,11 @@ function Home() {
     
     return (
         <>
-            <h1>Hello Username</h1>
+        <Box align="center">
             <BearCounter sx={{ display: 'flex', fontFamily: 'roboto' }}/>
             <Box sx={{fontFamily: 'roboto' }}>
                 <h2>Bla bla</h2>
+            </Box>
             </Box>
         </>
     )
