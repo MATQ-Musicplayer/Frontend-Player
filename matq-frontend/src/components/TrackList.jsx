@@ -8,7 +8,7 @@ import TrackItem from "./TrackItem";
 const API_URL_TRACKS = 'http://localhost:8080/tracks';
 
 function TrackList(props) {
-    // const [tracks, setTracks] = useState([]);
+
 
     // async function fetchTracks() {
     //     try {
@@ -37,7 +37,7 @@ function TrackList(props) {
     },[]);
 
     let renderTracks = tracks.map(track => {
-        return <TrackItem key={track._id} title={track.title} artist={track.artist} image={track.image} src={track.src} year={track.year} />
+        return <TrackItem key={track._id} trackId={track._id} title={track.title} artist={track.artist} image={track.image} src={track.src} year={track.year} />
     });
     
     return (

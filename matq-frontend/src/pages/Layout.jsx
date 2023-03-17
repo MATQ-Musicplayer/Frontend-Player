@@ -28,10 +28,12 @@ function Layout() {
         <Box 
             sx={{
                 fontFamily: 'Roboto',
-                minHeight: '100',
+                minHeight: '100vh',
+                backgroundColor: 'lightgray'
             }}
         >
-            <Header/>
+            <Header
+            />
 
 
             <Outlet  />
@@ -42,11 +44,13 @@ function Layout() {
                 left: 0,
                 bottom: 0,
                 width: '100%',
+                
             }}
             >
                     <BottomNavigation
                         sx={{
-                            padding: 1
+                            padding: 1,
+                            
                         }}
                         showLabels
                         value={value}
