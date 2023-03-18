@@ -1,6 +1,7 @@
 
 import { Container, Typography } from "@mui/material";
 import Player from "../components/Player";
+import MediaControlCard from "../components/Player";
 
 
 
@@ -14,7 +15,7 @@ function Music() {
             
             <Typography textAlign={"center"}>Nice Track</Typography>
 
-            <Player></Player>
+            <MediaControlCard></MediaControlCard>
 
         </Container>
     )

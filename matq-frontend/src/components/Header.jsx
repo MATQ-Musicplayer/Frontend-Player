@@ -3,7 +3,8 @@ import { Search } from "@mui/icons-material";
 import { AppBar, TextField, Toolbar, Typography} from "@mui/material";
 import { Box } from "@mui/system";
 import VolumeControls from './VolumeControls';
-
+import Contact from '../pages/Contact';
+import {Link} from 'react-router-dom'
 
 
 function Header() {
@@ -27,12 +28,14 @@ function Header() {
                         
 
                     <VolumeControls />
-
+                    <Link to= '/contact'> Contact
+                    </Link>
                     <Box
                     sx={{
                         display: "flex"
                     }}
                     >
+                        
                         <TextField
                             type={"search"}
                             label="Search"
