@@ -59,6 +59,6 @@ const useTrackStore = create((set, get) => ({
     },
     setTrackIndex: (value) => set(({trackIndex: value}))
 }));
- 
+
 
 export default useTrackStore;

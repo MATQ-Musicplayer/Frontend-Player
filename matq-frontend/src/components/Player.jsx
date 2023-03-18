@@ -36,8 +36,8 @@ function Player() {
                     />
                         
                 </Card>
-            </Box>
-            
+            </Box> 
+              
 
 
        

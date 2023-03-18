@@ -72,7 +72,7 @@ export default function MusicPlayerSlider({tracks}) {
     const queue = useTrackStore(state => state.queue);
 
     const theme = useTheme();
-    const [duration, setDuration] = useState(200); // seconds
+    const [dur, setDur] = useState(200); // seconds
     const [position, setPosition] = useState(32);
     const [paused, setPaused] = useState(false);
 
@@ -83,7 +83,7 @@ export default function MusicPlayerSlider({tracks}) {
     
     const [track, setTrack] = useState({});
 
-    const [play, {pause, stop}] = useSound(track.src, {
+    const [play, {pause, stop, duration}] = useSound(track.src, {
         volume: vol,
         onend: () => {
             console.log('song ended');
@@ -96,13 +96,17 @@ export default function MusicPlayerSlider({tracks}) {
             addToQueue(track._id);
         });
         console.log(queue);
-        setCurrentTrack(queue[trackIndex]);
- 
-    }, [tracks]); 
+        setCurrentTrack(tracks[trackIndex]);
+        setDur(duration);
 
+
+    }, [tracks]); 
+       
     useEffect(() => {
         if (currentTrack) {
             setTrack(currentTrack);   
+            setDur(duration);
+
         }
     }, [currentTrack]);
 
@@ -125,24 +129,26 @@ export default function MusicPlayerSlider({tracks}) {
 
     function nextTrackHandler() {
         console.log('Next track');
-        stop()
-
-        if (trackIndex === 0) {
-            setTrack(queue[1])
-        }
+        stop();
    
-
-            queue.length > trackIndex ? increaseTrackIndex() : setTrackIndex(0)
-  
+        if (queue?.length > trackIndex) {
+            increaseTrackIndex()
+        } else {
+            setTrackIndex(0)
+        }
   
         console.log(trackIndex);
-        // setCurrentTrack(queue[trackIndex]);
+
         setIsPlaying(false);
         setPlayer({
             play, pause, stop
         });
         
         setTrack(queue[trackIndex]);
+        // setDur(formatDuration(duration));
+        // setDur(duration);
+        setDur(duration);
+
     }
    
     function prevTrackHandler() {
@@ -153,14 +159,18 @@ export default function MusicPlayerSlider({tracks}) {
         });
         setIsPlaying(false);
         console.log('Prev track');
-        
 
-
-        
-        trackIndex > 1 ? decreaseTrackIndex() : setTrackIndex(queue.length)
+        if (trackIndex > 1) {
+            decreaseTrackIndex();
+        } else {
+            setTrackIndex(tracks.length);
+        }
         console.log(trackIndex);
-        // setCurrentTrack(queue[trackIndex]); 
+
         setTrack(queue[trackIndex]);
+
+        setDur(duration);
+
     } 
  
 
@@ -172,9 +182,9 @@ export default function MusicPlayerSlider({tracks}) {
 
     const mainIconColor = theme.palette.mode === "dark" ? "#fff" : "#000";
     const lightIconColor =
-        theme.palette.mode === "dark" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.4)";
+        theme.palette.mode === "dark" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.4)"; 
 
-    return (
+    return (  
         <Box sx={{ width: "100%", overflow: "hidden" }}>
         <Widget>
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -204,7 +214,7 @@ export default function MusicPlayerSlider({tracks}) {
             value={position}
             min={0}
             step={1}
-            max={duration}
+            max={dur}
             onChange={(_, value) => setPosition(value)}
             sx={{
                 color: theme.palette.mode === "dark" ? "#fff" : "rgba(0,0,0,0.87)",
@@ -241,7 +251,7 @@ export default function MusicPlayerSlider({tracks}) {
             }}
             >
             <TinyText>{formatDuration(position)}</TinyText>
-            <TinyText>-{formatDuration(duration - position)}</TinyText>
+            <TinyText>-{formatDuration(dur - position)}</TinyText>
             </Box>
             <Box
             sx={{
