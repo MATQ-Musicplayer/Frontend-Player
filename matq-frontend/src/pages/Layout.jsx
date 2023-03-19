@@ -12,7 +12,8 @@ import HeadphonesIcon from '@mui/icons-material/Headphones';
 /* ------------------------ */
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import Home from "./Home";
-import Player from "./Player";
+import Player from "../components/Player";
+import Header from "../components/Header";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
@@ -24,40 +25,44 @@ function Layout() {
 
 
     return (
-        <Box sx={{
-            fontFamily: 'Roboto',
-            height: '100',
-        }}>
-
-        <Outlet />
-
         <Box 
-        sx={{
-            position: "fixed",
-            left: 0,
-            bottom: 0,
-            width: '100%',
-            padding: '1em',
-
-        }}
-        variant='rounded'
+            sx={{
+                fontFamily: 'Roboto',
+                minHeight: '100vh',
+                backgroundColor: 'lightgray'
+            }}
         >
-                <BottomNavigation
-                    sx={{
+            <Header
+            />
 
-                    }} 
-                    variant='rounded'
-                    showLabels
-                    value={value}
-                    onChange={(event, newValue) => {
-                        setValue(newValue);
-                    }}
-                >
-                    <BottomNavigationAction href="/"  label="Home" icon={<HomeIcon fontSize="large"/>} />
-                    <BottomNavigationAction  href="/player" label="Music" icon={<HeadphonesIcon fontSize="large"/>} />
-                    <BottomNavigationAction href="/favs" label="Favorites" icon={<FavoriteIcon fontSize="large"/>} />
-                    
-                </BottomNavigation>
+
+            <Outlet  />
+
+            <Box 
+            sx={{
+                position: "fixed",
+                left: 0,
+                bottom: 0,
+                width: '100%',
+                
+            }}
+            >
+                    <BottomNavigation
+                        sx={{
+                            padding: 1,
+                            
+                        }}
+                        showLabels
+                        value={value}
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
+                        }}
+                    >
+                        <BottomNavigationAction href="/"  label="Home" icon={<HomeIcon fontSize="large"/>} />
+                        <BottomNavigationAction  href="/music" label="Music" icon={<HeadphonesIcon fontSize="large"/>} />
+                        <BottomNavigationAction href="/favs" label="Favorites" icon={<FavoriteIcon fontSize="large"/>} />
+                        
+                    </BottomNavigation>
             </Box>
         </Box>
     );

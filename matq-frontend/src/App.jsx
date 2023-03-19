@@ -3,9 +3,10 @@ import Home from './pages/Home';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './pages/Layout';
 import NotFoundPage from './pages/NotFoundPage';
-import Player from './pages/Player';
+import Player from './components/Player';
 import Favourites from './pages/Favourites';
 import '@fontsource/roboto/300.css';
+import Music from './pages/Music';
 
 function App() {
 
@@ -20,7 +21,7 @@ function App() {
 
                           <Route index element={<Home/> }></Route>
 
-                          <Route path='/player' element={<Player />}></Route>
+                          <Route path='/music' element={<Music />}></Route>
 
                           <Route path='/favs' element={<Favourites />} ></Route>
 
