@@ -37,7 +37,7 @@ function TrackItem({title, artist,  image, src, year, trackId}) {
         });
 
         if (evt.target.textContent === 'Stop' && isPlaying) {
-            console.log('Stop gedruckt!!!');
+            console.log('Stop!!!');
             pausePlay()
             setIsPlaying(false);
         } else {
@@ -51,7 +51,7 @@ function TrackItem({title, artist,  image, src, year, trackId}) {
     }
 
     return (
-        <Grid item xs={6} md={2}  >
+        <Grid item xs={6} md={3}  >
             <Card
             sx={{
                 height: "100"
@@ -62,7 +62,11 @@ function TrackItem({title, artist,  image, src, year, trackId}) {
                 image={image}
                 alt="Poster"
                 />
-                <CardContent>
+                <CardContent
+                sx={{
+                    height: 100
+                }}
+                >
                     <Typography
                     variant="h6"
                     component={"h3"}

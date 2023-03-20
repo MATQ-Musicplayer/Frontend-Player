@@ -21,8 +21,7 @@ theme = responsiveFontSizes(theme);
 
 
 function Layout() {
-    const [value, setValue] = React.useState(0);
-
+    // const [value, setValue] = React.useState(0);
 
     return (
         <Box 
@@ -53,10 +52,10 @@ function Layout() {
                             
                         }}
                         showLabels
-                        value={value}
-                        onChange={(event, newValue) => {
-                            setValue(newValue);
-                        }}
+                        // value={value}
+                        // onChange={(event, newValue) => {
+                        //     setValue(newValue);
+                        // }}
                     >
                         <BottomNavigationAction href="/"  label="Home" icon={<HomeIcon fontSize="large"/>} />
                         <BottomNavigationAction  href="/music" label="Music" icon={<HeadphonesIcon fontSize="large"/>} />

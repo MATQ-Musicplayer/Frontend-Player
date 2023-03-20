@@ -15,6 +15,7 @@ import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded";
 import { CardMedia } from "@mui/material";
 import useTrackStore from "../hooks/TrackStore";
 import useSound from "use-sound";
+import { StopRounded } from "@mui/icons-material";
 
 const defaultImage =
   "https://images.macrumors.com/t/hi1_a2IdFGRGMsJ0x31SdD_IcRk=/1600x/article-new/2018/05/apple-music-note.jpg";
@@ -98,9 +99,7 @@ export default function MusicPlayerSlider({tracks}) {
 
         console.log(trackIndex);
         setCurrentTrack(tracks[trackIndex]);
-        setPlayer({
-            play, pause, stop
-        });
+
 
     }, [tracks]); 
        
@@ -112,12 +111,14 @@ export default function MusicPlayerSlider({tracks}) {
    
     function handlePlay() {
         console.log(track); 
-        stop();
+
+        setPlayer({
+            play, pause, stop
+        });
 
         startPlay();
         if (!isPlaying ) {
-            // startPlay();
-            play();
+            startPlay()
             setIsPlaying(true);
             console.log('PLAY!!!!!!!!!!!')
 
@@ -129,50 +130,46 @@ export default function MusicPlayerSlider({tracks}) {
     }    
 
     function nextTrackHandler() {
-        console.log('Next track');
-        stop();
-   
+        // console.log('Next track');
+        // stop();
+        setPlayer({
+            play, pause, stop
+        });
+
+        setIsPlaying(false);
+
+        
+        setTrack(tracks[trackIndex]);
  
         if ((tracks?.length - 1) > trackIndex) {
-            console.log(tracks.length);
+            // console.log(tracks.length);
             increaseTrackIndex()
         } else {
             setTrackIndex(0)
         }
   
-        console.log(trackIndex);
-
-        setIsPlaying(false);
-        // setPlayer({
-        //     play, pause, stop
-        // });
-        
-        setTrack(tracks[trackIndex]);
+        // console.log(trackIndex);
     }
    
     function prevTrackHandler() {
-        stop();
 
-        // setPlayer({
-        //     play, pause, stop
-        // });
+
+        setPlayer({
+            play, pause, stop
+        });
         setIsPlaying(false);
-        console.log('Prev track');
+        // console.log('Prev track');
 
         if (trackIndex   > 1) {
             decreaseTrackIndex();
         } else {
             setTrackIndex(tracks.length - 1 );
         }
-        console.log(trackIndex);
+        // console.log(trackIndex);
 
         setTrack(tracks[trackIndex]);
-
-        // setDur(duration);
-
     } 
  
-
     function formatDuration(value) {
         const minute = Math.floor(value / 60);
         const secondLeft = value - minute * 60;
@@ -180,8 +177,8 @@ export default function MusicPlayerSlider({tracks}) {
     }
 
     const mainIconColor = theme.palette.mode === "dark" ? "#fff" : "#000";
-    const lightIconColor =
-        theme.palette.mode === "dark" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.4)"; 
+    // const lightIconColor =
+    //     theme.palette.mode === "dark" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.4)"; 
 
     return (  
         <Box sx={{ width: "100%", overflow: "hidden" }}>
@@ -246,11 +243,11 @@ export default function MusicPlayerSlider({tracks}) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                mt: -2,
+                mt: 2,
             }}
             >
-            <TinyText>{formatDuration(position)}</TinyText>
-            <TinyText>-{formatDuration(dur - position)}</TinyText>
+            {/* <TinyText>{formatDuration(position)}</TinyText>
+            <TinyText>-{formatDuration(dur - position)}</TinyText> */}
             </Box>
             <Box
             sx={{
@@ -259,7 +256,7 @@ export default function MusicPlayerSlider({tracks}) {
                 justifyContent: "center",
                 mt: -1,
             }}
-            >
+            >   
             <IconButton 
             aria-label="previous song"
             onClick={prevTrackHandler}
@@ -267,7 +264,7 @@ export default function MusicPlayerSlider({tracks}) {
                 <FastRewindRounded fontSize="large" htmlColor={mainIconColor} />
             </IconButton>
             <IconButton
-                aria-label={!isPlaying ? "play" : "pause"}
+                aria-label={!isPlaying ? "play" : "stop"}
                 onClick={() => {
                     handlePlay()
 
@@ -276,10 +273,9 @@ export default function MusicPlayerSlider({tracks}) {
                 {!isPlaying ? (
                 <PlayArrowRounded
                     sx={{ fontSize: "3rem" }}
-
                 />
                 ) : (
-                <PauseRounded
+                <StopRounded
                     sx={{ fontSize: "3rem" }}
                     htmlColor={mainIconColor}
                 />
