@@ -57,14 +57,14 @@ const TinyText = styled(Typography)({
 export default function MusicPlayerSlider({tracks}) {
     const vol = useTrackStore(state => state.volume);
     const setPlayer = useTrackStore(state => state.setPlayer);
-
+    
     const isPlaying = useTrackStore(state => state.isPlaying);
     const setIsPlaying = useTrackStore(state => state.setIsPlaying);
-
+    
     const startPlay = useTrackStore(state => state.startPlay);
     const pausePlay = useTrackStore(state => state.pausePlay);
     const stopPlay = useTrackStore(state => state.stopPlay);
-
+    
     const currentTrack = useTrackStore(state => state.currentTrack);
     const setCurrentTrack = useTrackStore(state => state.setCurrentTrack);
 
@@ -80,7 +80,7 @@ export default function MusicPlayerSlider({tracks}) {
     const increaseTrackIndex = useTrackStore(state => state.increaseTrackIndex);
     const decreaseTrackIndex = useTrackStore(state => state.decreaseTrackIndex);
     const setTrackIndex = useTrackStore(state => state.setTrackIndex);
-    
+
     const [track, setTrack] = useState({});
 
     const [play, {pause, stop, duration}] = useSound(track.src, {
@@ -95,43 +95,46 @@ export default function MusicPlayerSlider({tracks}) {
         tracks.forEach(track => {
             addToQueue(track._id);
         });
-        console.log(queue);
-        setCurrentTrack(tracks[trackIndex]);
-        setDur(duration);
 
+        console.log(trackIndex);
+        setCurrentTrack(tracks[trackIndex]);
+        setPlayer({
+            play, pause, stop
+        });
 
     }, [tracks]); 
        
     useEffect(() => {
         if (currentTrack) {
             setTrack(currentTrack);   
-            setDur(duration);
-
         }
     }, [currentTrack]);
-
    
-  
     function handlePlay() {
-        console.log(track);
+        console.log(track); 
+        stop();
 
-        if (!isPlaying) {
+        startPlay();
+        if (!isPlaying ) {
+            // startPlay();
             play();
             setIsPlaying(true);
             console.log('PLAY!!!!!!!!!!!')
 
         } else {
-            pause();
+            pause();   
             setIsPlaying(false);
             console.log('PAUSE');
         }
-    }
+    }    
 
     function nextTrackHandler() {
         console.log('Next track');
         stop();
    
-        if (queue?.length > trackIndex) {
+ 
+        if ((tracks?.length - 1) > trackIndex) {
+            console.log(tracks.length);
             increaseTrackIndex()
         } else {
             setTrackIndex(0)
@@ -140,36 +143,32 @@ export default function MusicPlayerSlider({tracks}) {
         console.log(trackIndex);
 
         setIsPlaying(false);
-        setPlayer({
-            play, pause, stop
-        });
+        // setPlayer({
+        //     play, pause, stop
+        // });
         
-        setTrack(queue[trackIndex]);
-        // setDur(formatDuration(duration));
-        // setDur(duration);
-        setDur(duration);
-
+        setTrack(tracks[trackIndex]);
     }
    
     function prevTrackHandler() {
-        stop()
+        stop();
 
-        setPlayer({
-            play, pause, stop
-        });
+        // setPlayer({
+        //     play, pause, stop
+        // });
         setIsPlaying(false);
         console.log('Prev track');
 
-        if (trackIndex > 1) {
+        if (trackIndex   > 1) {
             decreaseTrackIndex();
         } else {
-            setTrackIndex(tracks.length);
+            setTrackIndex(tracks.length - 1 );
         }
         console.log(trackIndex);
 
-        setTrack(queue[trackIndex]);
+        setTrack(tracks[trackIndex]);
 
-        setDur(duration);
+        // setDur(duration);
 
     } 
  
@@ -208,7 +207,7 @@ export default function MusicPlayerSlider({tracks}) {
                 </Typography>
             </Box>
             </Box>
-            <Slider
+            {/* <Slider
             aria-label="time-indicator"
             size="small"
             value={position}
@@ -241,7 +240,7 @@ export default function MusicPlayerSlider({tracks}) {
                 opacity: 0.28,
                 },
             }}
-            />
+            /> */}
             <Box
             sx={{
                 display: "flex",
@@ -271,14 +270,7 @@ export default function MusicPlayerSlider({tracks}) {
                 aria-label={!isPlaying ? "play" : "pause"}
                 onClick={() => {
                     handlePlay()
-                    // setPaused(!isPlaying);
-                    // if (!paused) {
-                    //     // play()
-                    //     console.log('PLAY!!!!!!!!!!!')
-                    // } else {
-                    //     // pause()
-                    //     console.log('PAUSE');
-                    // }
+
                 }} 
             > 
                 {!isPlaying ? (
@@ -306,10 +298,10 @@ export default function MusicPlayerSlider({tracks}) {
             sx={{ mb: 1, px: 1 }}
             alignItems="center"
             >
-            <VolumeDownRounded htmlColor={lightIconColor} />
+            {/* <VolumeDownRounded htmlColor={lightIconColor} />
             <Slider
                 aria-label="Volume"
-                defaultValue={30}
+                defaultValue={vol}
                 sx={{
                 color:
                     theme.palette.mode === "dark" ? "#fff" : "rgba(0,0,0,0.87)",
@@ -329,8 +321,8 @@ export default function MusicPlayerSlider({tracks}) {
                 },
                 }}
             />
-            <VolumeUpRounded htmlColor={lightIconColor} />
-            </Stack>
+            <VolumeUpRounded htmlColor={lightIconColor} />      */}
+            </Stack>   
         </Widget>
         </Box>
     );
