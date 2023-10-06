@@ -7,14 +7,13 @@ function Home() {
     
     
     return (
-        <Container
-        sx={{
-            mt: "1rem"
-        }}
-        >
+        <>
             <h1>Hello Username</h1>
-            <TrackList/>
-        </Container>
+            <BearCounter sx={{ display: 'flex', fontFamily: 'roboto' }}/>
+            <Box sx={{fontFamily: 'roboto' }}>
+                <h2>Bla bla</h2>
+            </Box>
+        </>
     )
 }
 
