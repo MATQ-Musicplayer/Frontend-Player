@@ -19,7 +19,9 @@ let theme = createTheme();
 theme = responsiveFontSizes(theme);
 
 function Layout() {
-  const [value, setValue] = React.useState(0);
+
+    // const [value, setValue] = React.useState(0);
+
 
     return (
         <Box sx={{
@@ -43,19 +45,32 @@ function Layout() {
                 <BottomNavigation
                     sx={{
 
-                    }} 
-                    variant='rounded'
-                    showLabels
-                    value={value}
-                    onChange={(event, newValue) => {
-                        setValue(newValue);
-                    }}
-                >
-                    <BottomNavigationAction href="/"  label="Home" icon={<HomeIcon fontSize="large"/>} />
-                    <BottomNavigationAction  href="/player" label="Music" icon={<HeadphonesIcon fontSize="large"/>} />
-                    <BottomNavigationAction href="/favs" label="Favorites" icon={<FavoriteIcon fontSize="large"/>} />
-                    
-                </BottomNavigation>
+            <Box 
+            sx={{
+                position: "fixed",
+                left: 0,
+                bottom: 0,
+                width: '100%',
+                
+            }}
+            >
+                    <BottomNavigation
+                        sx={{
+                            padding: 1,
+                            
+                        }}
+                        showLabels
+                        // value={value}
+                        // onChange={(event, newValue) => {
+                        //     setValue(newValue);
+                        // }}
+                    >
+                        <BottomNavigationAction href="/"  label="Home" icon={<HomeIcon fontSize="large"/>} />
+                        <BottomNavigationAction  href="/music" label="Music" icon={<HeadphonesIcon fontSize="large"/>} />
+                        <BottomNavigationAction href="/favs" label="Favorites" icon={<FavoriteIcon fontSize="large"/>} />
+                        
+                    </BottomNavigation>
+
             </Box>
         </Box>
     );

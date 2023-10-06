@@ -7,6 +7,7 @@ const API_URL_TRACKS = 'http://localhost:8080/tracks';
 
 const useTrackStore = create((set, get) => ({
     tracks: [],
+    // setTracks: async (tracks) => set({tracks: tracks}),
     currentTrack: null,
     setCurrentTrack: (trackId) => set(state => ({currentTrack: trackId})),
     isPlaying: false,
@@ -43,7 +44,8 @@ const useTrackStore = create((set, get) => ({
     },
     queue: [],
     addToQueue: (trackId) => {
-        const queue = get().queue;
+        // set({queue: []});
+        const queue = [];/*  = get().queue; */
         const track = get().tracks.find(track => track._id === trackId);
         queue.push(track);
         set({queue: queue});
